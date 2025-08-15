@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script Kiddie</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Script Kiddie</h1>
+
+        <div class="info">
+            <p><strong>Waktu:</strong> <span id="timer">0</span> detik</p>
+            <p><strong>WPM:</strong> <span id="wpm">0</span></p>
+            <p><strong>Akurasi:</strong> <span id="accuracy">0</span>%</p>
+        </div>
+        
+        <div id="test-text">
+        Ketik paragraf ini dengan cepat dan akurat untuk mengukur kemampuan mengetik kamu.
+        </div>
+        <textarea id="input-area" placeholder="Mulai mengetik di sini..." rows="5"></textarea>
+
+        <button id="restart">Restart</button>
+        <button id="toggle-theme">🌙 Dark Mode</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
