@@ -1,0 +1,26 @@
+{
+  "words":{
+    "english_words": [
+      "apple","school","computer","science","keyboard","program","random","typing","practice","speed","accuracy","movie","island","planet","river","number","orange","student","teacher","project","language","music","history","nature","culture","friend","family","dream","bottle","window"
+    ],
+    "indonesia_words": [
+      "apel","sekolah","komputer","sains","papan","program","acak","mengetik","latihan","kecepatan","akurasi","film","pulau","planet","sungai","angka","jeruk","siswa","guru","proyek","bahasa","musik","sejarah","alam","budaya","teman","keluarga","mimpi","botol","jendela"
+    ]
+  },
+  
+  "quotes":{
+    "quotes_en": [
+    "The quick brown fox jumps over the lazy dog multiple times to test typing skills.",
+    "Focus on accuracy and speed will follow with steady practice and persistence.",
+    "Learning to type faster opens doors to coding writing and efficient communication.",
+    "Never gonna give you up, never gonna let you down, never gonna run around and dessert you.",
+    "Hate let me tell you how much I've come to hate you since I began to live."
+  ],
+  "quotes_id": [
+    "Kucing cepat melompat melewati anjing yang malas untuk menguji kemampuan mengetik.",
+    "Fokus pada akurasi maka kecepatan akan mengikuti dengan latihan yang konsisten.",
+    "Belajar mengetik lebih cepat membuka peluang untuk menulis dan bekerja lebih efisien.",
+    "Nama yang sama bertahan dalam ruangan hening, tanpa suara bertahan tak bergeming." 
+  ]
+  }
+}
