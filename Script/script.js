@@ -356,7 +356,7 @@ restartBtn.addEventListener('click', restartTest);
 /* ---------- Load json ---------- */
 async function loadWordData() {
   try {
-    const response = await fetch('.../Data/data.json');
+    const response = await fetch('Data/data.json');
     if (!response.ok) throw new Error('Gagal fetch data.json: ' + response.status);
     WORD_DATA = await response.json();
   } 
