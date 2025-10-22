@@ -44,3 +44,10 @@ list of all update and version
 ## 0.9 - 19.10.25
 - Added help button for typing tips
 - Added total count selection for words and timer mode
+
+# Full Release
+
+## 1.0 - 22.10.25
+- Renamed the website from Speedy Typist to Speed Writer
+- All settings were moved to settings panel beside restart button
+- Input are disabled when user finished typing
