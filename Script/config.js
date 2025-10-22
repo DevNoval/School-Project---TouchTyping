@@ -17,7 +17,7 @@ const STATE = {
   language: 'id',            // 'id' or 'en'
   mode: 'quotes',            // words | quotes | timer
   setCount: 'option2',       // option1 | option2 | option3
-  audio: false,
+  audio: false,              // on or off
   wordsList: [],             // array kata aktif
   currentIndex: 0,           // indeks kata saat ini
   started: false,
@@ -53,4 +53,6 @@ const audioBtn = document.getElementById('audioBtn');
 const helpBtn = document.getElementById('helpBtn');
 const helpModal = document.getElementById('helpModal');
 const countSelect = document.getElementById('countSelect');
+const settingsBtn = document.getElementById("settingsBtn");
+const settingsModal = document.getElementById("settingsPanel");
 const scoreboard = document.querySelectorAll('.score-item');
