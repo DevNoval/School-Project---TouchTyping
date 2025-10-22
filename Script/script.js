@@ -109,6 +109,145 @@ function updateCaret() {
   }
 }
 
+/* ---------- Input handling ---------- */
+function updateCurrentWordDisplay(typed) {
+  const curEl = document.querySelector(`.word[data-index="${STATE.currentIndex}"]`);
+  if (!curEl) return;
+  const target = STATE.wordsList[STATE.currentIndex] || '';
+  const charSpans = Array.from(curEl.children).filter(n => n.tagName === "SPAN" && !n.classList.contains('caret'));
+
+  for (let i = 0; i < target.length; i++) {
+    const chSpan = charSpans[i];
+    if (i < typed.length) {
+      if (typed[i] === target[i]) chSpan.style.color = 'var(--success)';
+      else chSpan.style.color = 'var(--danger)';
+    } else {
+      chSpan.style.color = ''; 
+    }
+  }
+  updateCaret();
+  updateAccuracy();
+  updateWPM();
+}
+
+function onType(e) {
+  const val = typingInput.value;
+  if (!STATE.started && val.length) startTimer();
+  if (e.isTrusted) STATE.totalKeystrokes++;
+
+  updateCurrentWordDisplay(val);
+  updateInputStyle(val);
+
+  const target = STATE.wordsList[STATE.currentIndex] || "";
+  const isWrong = [...val].some((c, i) => c !== target[i]);
+  typingInput.classList.toggle("input-wrong", isWrong);
+  const curEl = document.querySelector(`.word[data-index="${STATE.currentIndex}"]`);
+  if (curEl && !val.length) {
+    curEl.classList.remove("wrong");
+    typingInput.classList.remove("input-wrong");
+  }
+}
+
+function inputHandling() {
+  const typed = typingInput.value.trim();
+  const target = STATE.wordsList[STATE.currentIndex] || "";
+  const curEl = document.querySelector(`.word[data-index="${STATE.currentIndex}"]`);
+
+  if (!typed.length) return typingInput.classList.remove("input-wrong");
+  const isCorrect = typed === target;
+
+  if (isCorrect) {
+    if (curEl) {
+      curEl.classList.remove("current", "wrong");
+      curEl.classList.add("correct");
+      curEl.querySelectorAll("span:not(.caret)").forEach(s => s.style.color = "var(--success)");
+    }
+    STATE.currentIndex++;
+    typingInput.value = "";
+    STATE.mode === "timer" ? renderTimerWords() : (() => {
+      document.querySelectorAll(".word").forEach(w => w.classList.remove("current"));
+      document.querySelector(`.word[data-index="${STATE.currentIndex}"]`)?.classList.add("current");
+    })();
+    updateCaret();
+
+    typingInput.classList.remove("input-wrong");
+    if (STATE.mode !== "timer" && STATE.currentIndex >= STATE.wordsList.length) {
+      stopTimer();
+      typingInput.blur();
+    }
+  } 
+  else {
+    playErrorSound();
+    curEl?.classList.add("wrong");
+    typingInput.value += " ";
+    typingInput.classList.add("input-wrong");
+  }
+  updateAccuracy();
+  updateWPM();
+  updateFooter();
+  typingInput.focus();
+}
+
+function updateInputStyle(typed) {
+  const target = STATE.wordsList[STATE.currentIndex] || '';
+  let isWrong = false;
+
+  for (let i = 0; i < typed.length; i++) {
+    if (i >= target.length || typed[i] !== target[i]) {
+      isWrong = true;
+      break;
+    }
+  }
+  if (isWrong) {
+    typingInput.classList.add('input-wrong');
+  } 
+  else {
+    typingInput.classList.remove('input-wrong');
+  }
+}
+
+function onKeyDown(e) {
+  const target = STATE.wordsList[STATE.currentIndex] || '';
+  const typed = typingInput.value;
+  const key = e.key;
+  const isTypingChar = key.length === 1 && key !== ' ';
+  const willBeCorrect = isTypingChar && (key === target[typed.length]) && (typed.length < target.length);
+  const willBeTypo = isTypingChar && !willBeCorrect; // Jika bukan spasi dan bukan karakter benar berikutnya
+
+  if (willBeCorrect) {
+      STATE.correctKeystrokes++;
+      if (STATE.audio) playTypeSound(); 
+  } 
+  else if (willBeTypo) {
+      typingInput.classList.add('input-wrong');
+      if (STATE.audio) playErrorSound(); // 🔊 Bunyi error diputar di sini
+  } 
+  else if (key === 'Backspace' && typed.length > 0) {
+      if (typed.length <= target.length && typed[typed.length - 1] === target[typed.length - 1]) {
+          STATE.correctKeystrokes--;
+      }
+      if (STATE.audio) playTypeSound(); // Bunyi normal saat Backspace
+  }
+  if (e.key === ' ') {
+    e.preventDefault(); // cegah masuknya spasi ke input
+    inputHandling();
+    return;
+  }
+}
+
+/* WPM & accuracy */
+function updateWPM() {
+  const minutes = Math.max((STATE.elapsed || 0) / 60, 1/60);
+  const wpm = Math.round((STATE.correctKeystrokes / CONFIG.lettersPerWPM) / minutes) || 0;
+  wpmId.textContent = wpm;
+}
+
+function updateAccuracy() {
+  const total = STATE.totalKeystrokes || 1;
+  const accuracy = Math.max(1, Math.min(100, Math.round((STATE.correctKeystrokes / total) * 100)));
+  accuracyId.textContent = accuracy;
+}
+
 /* ---------- Timer & scoring ---------- */
 function startTimer() {
   if (STATE.started) return;
@@ -167,144 +306,6 @@ function cleanUpTest() {
     typingInput.classList.remove('input-flash');
     typingInput.classList.remove('input-wrong');
     wordsContainer.classList.remove('display-flash');
-  }
-}
-
-/* WPM & accuracy */
-function updateWPM() {
-  const minutes = Math.max((STATE.elapsed || 0) / 60, 1/60);
-  const wpm = Math.round((STATE.correctKeystrokes / CONFIG.lettersPerWPM) / minutes) || 0;
-  wpmId.textContent = wpm;
-}
-
-function updateAccuracy() {
-  const total = STATE.totalKeystrokes || 1;
-  const accuracy = Math.max(1, Math.min(100, Math.round((STATE.correctKeystrokes / total) * 100)));
-  accuracyId.textContent = accuracy;
-}
-
-/* ---------- Input handling ---------- */
-function updateCurrentWordDisplay(typed) {
-  const curEl = document.querySelector(`.word[data-index="${STATE.currentIndex}"]`);
-  if (!curEl) return;
-  const target = STATE.wordsList[STATE.currentIndex] || '';
-  const charSpans = Array.from(curEl.children).filter(n => n.tagName === "SPAN" && !n.classList.contains('caret'));
-
-  for (let i = 0; i < target.length; i++) {
-    const chSpan = charSpans[i];
-    if (i < typed.length) {
-      if (typed[i] === target[i]) chSpan.style.color = 'var(--success)';
-      else chSpan.style.color = 'var(--danger)';
-    } else {
-      chSpan.style.color = ''; 
-    }
-  }
-  updateCaret();
-  updateAccuracy();
-  updateWPM();
-}
-
-function onType(e) {
-  const val = typingInput.value;
-  if (!STATE.started && val.length) startTimer();
-  if (e.isTrusted) STATE.totalKeystrokes++;
-
-  updateCurrentWordDisplay(val);
-  updateInputStyle(val);
-
-  const target = STATE.wordsList[STATE.currentIndex] || "";
-  const isWrong = [...val].some((c, i) => c !== target[i]);
-  typingInput.classList.toggle("input-wrong", isWrong);
-  const curEl = document.querySelector(`.word[data-index="${STATE.currentIndex}"]`);
-  if (curEl && !val.length) {
-    curEl.classList.remove("wrong");
-    typingInput.classList.remove("input-wrong");
-  }
-}
-
-function inputHandling() {
-  const typed = typingInput.value.trim();
-  const target = STATE.wordsList[STATE.currentIndex] || "";
-  const curEl = document.querySelector(`.word[data-index="${STATE.currentIndex}"]`);
-  if (!typed.length) return typingInput.classList.remove("input-wrong");
-  const isCorrect = typed === target;
-  if (isCorrect) {
-    if (curEl) {
-      curEl.classList.remove("current", "wrong");
-      curEl.classList.add("correct");
-      curEl.querySelectorAll("span:not(.caret)").forEach(s => s.style.color = "var(--success)");
-    }
-    STATE.currentIndex++;
-    typingInput.value = "";
-    STATE.mode === "timer" ? renderTimerWords() : (() => {
-      document.querySelectorAll(".word").forEach(w => w.classList.remove("current"));
-      document.querySelector(`.word[data-index="${STATE.currentIndex}"]`)?.classList.add("current");
-    })();
-    updateCaret();
-
-    typingInput.classList.remove("input-wrong");
-    if (STATE.mode !== "timer" && STATE.currentIndex >= STATE.wordsList.length) {
-      stopTimer();
-      typingInput.blur();
-    }
-  } 
-  else {
-    curEl?.classList.add("wrong");
-    typingInput.value += " ";
-    typingInput.classList.add("input-wrong");
-  }
-  updateAccuracy();
-  updateWPM();
-  updateFooter();
-  typingInput.focus();
-}
-
-function updateInputStyle(typed) {
-  const target = STATE.wordsList[STATE.currentIndex] || '';
-  let isWrong = false;
-
-  for (let i = 0; i < typed.length; i++) {
-    if (i >= target.length || typed[i] !== target[i]) {
-      isWrong = true;
-      break;
-    }
-  }
-  if (isWrong) {
-    typingInput.classList.add('input-wrong');
-  } 
-  else {
-    typingInput.classList.remove('input-wrong');
-  }
-}
-
-function onKeyDown(e) {
-  const target = STATE.wordsList[STATE.currentIndex] || '';
-  const typed = typingInput.value;
-  const key = e.key;
-  const isTypingChar = key.length === 1 && key !== ' ';
-  const willBeCorrect = isTypingChar && (key === target[typed.length]) && (typed.length < target.length);
-  const willBeTypo = isTypingChar && !willBeCorrect; // Jika bukan spasi dan bukan karakter benar berikutnya
-
-  if (willBeCorrect) {
-      STATE.correctKeystrokes++;
-      if (STATE.audio) playTypeSound(); 
-  } 
-  else if (willBeTypo) {
-      typingInput.classList.add('input-wrong');
-      if (STATE.audio) {
-          playErrorSound(); // 🔊 Bunyi error diputar di sini
-      }
-  } 
-  else if (key === 'Backspace' && typed.length > 0) {
-      if (typed.length <= target.length && typed[typed.length - 1] === target[typed.length - 1]) {
-          STATE.correctKeystrokes--;
-      }
-      if (STATE.audio) playTypeSound(); // Bunyi normal saat Backspace
-  }
-  if (e.key === ' ') {
-    e.preventDefault(); // cegah masuknya spasi ke input
-    inputHandling();
-    return;
   }
 }
 

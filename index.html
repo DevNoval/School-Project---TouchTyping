@@ -3,41 +3,68 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Speedy Typist</title>
+  <title>Speed Writer</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="theme-light">
-
   <div class="app">
+
+    <!--Header webpage-->
     <header class="app-header">
-      <h1>SpeedyTypist</h1>
+      <h1>Speed Writer</h1>
+      
+      <!--Control panel-->
       <div class="controls">
-        <button id="langBtn" class="btn" title="Ganti bahasa">🇮🇩 Bahasa</button>
+        <div id="settingsPanel" class="settings-panel hidden">
+          
+          <!--Language-->
+          <div class="settings-group">
+            <button id="langBtn" class="btn" title="Ganti bahasa">🇮🇩 Bahasa</button>
+          </div>
 
-        <select id="modeSelect" class="btn" title="Ganti mode">
-          <option value="quote">💬Kutipan</option>
-          <option value="words">⌨️Kata Acak</option>
-          <option value="timer">🕛Timer</option>
-        </select>
+          <!--Mode selection-->
+          <div class="settings-group">
+            <select id="modeSelect" class="btn" title="Ganti mode">
+              <option value="quote">💬Kutipan</option>
+              <option value="words">⌨️Kata Acak</option>
+              <option value="timer">🕛Timer</option>
+            </select>
+          </div>
 
-        <select id="countSelect" class="btn" title="Atur hitungan">
-          <option value="option1"></option>
-          <option value="option2"></option>
-          <option value="option3"></option>
-        </select>
+          <!--Count selection-->
+          <div class="settings-group">
+            <select id="countSelect" class="btn" title="Atur hitungan">
+              <option value="option1"></option>
+              <option value="option2"></option>
+              <option value="option3"></option>
+            </select>
+          </div>
 
-        <button id="audioBtn" class="btn" title="Putar audio">🔇</button>
-        <button id="themeBtn" class="btn" title="Ganti tema">☀️</button>
+          <!--Audio-->
+          <div class="settings-group">
+            <button id="audioBtn" class="btn" title="Putar audio">🔇</button>
+          </div>
+
+          <!--Theme-->
+          <div class="settings-group">
+            <button id="themeBtn" class="btn" title="Ganti tema">☀️</button>
+          </div>
+
+        </div>
+
+        <button id="settingsBtn" class="btn" title="Pengaturan">⚙️</button>
         <button id="restartBtn" class="btn primary">Restart</button>
       </div>
     </header>
 
     <main class="main">
+      <!--Test area-->
       <section class="test-area">
         <div id="wordsContainer" class="words-container" aria-live="polite"></div>
         <input id="typingInput" class="typing-input" placeholder="Ketik teks disini..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
       </section>
 
+      <!--Scoreboard-->
       <aside class="scoreboard">
         <div class="score-item">WPM: <span id="wpm">0</span></div>
         <div class="score-item">Waktu (s): <span id="time">0</span></div>
@@ -45,23 +72,25 @@
       </aside>
     </main>
 
+    <!--Footer-->
     <footer class="footer">
       <small>Mode: <span id="modeLabel">Kata Acak</span> • Kata tersisa: <span id="wordsLeft">0</span></small>
       <button id="helpBtn" class="btn help-btn" title="Bantuan">?</button>
     </footer>
 
+    <!--Helper-->
     <div id="helpModal" class="modal hidden" style="display:none;">
       <div class="modal-content">
         <h2>Posisi Jari (Home Row Key)</h2>
-        <p>Letakan jari-jari pada huruf A S D F (Kiri) dan J K L ; (Kanan).</p>
+        <p>Letakan jari-jari pada huruf A S D F (Kiri) dan J K L ; (Kanan).</p><br>
         <img id="homeRowImg" class="homeRowSVG" src="Data/touch-control.png" alt="Panduan posisi jari Home Row Key">
       </div>
     </div>
   </div>
 
+  <!--Javascript-->
   <script src="Script/config.js"></script>
-  <script src="Script/script.js"></script>
   <script src="Script/setting.js"></script>
-
+  <script src="Script/script.js"></script>
 </body>
 </html>

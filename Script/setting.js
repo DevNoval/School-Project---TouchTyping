@@ -81,7 +81,7 @@ function updateCountSelectOptions() {
     const option = document.createElement('option');
     option.value = value;
     if (isTimerMode) {
-      option.textContent = label + ' detik'
+      option.textContent = label + ' detik';
     } 
     else {
       option.textContent = label + ' kata';
@@ -93,6 +93,14 @@ function updateCountSelectOptions() {
     }
     countSelect.appendChild(option);
   }
+}
+
+/* ---------- Panel Pengaturan ---------- */
+function loadSettings() {
+  themeBtn.value = CONFIG.theme;
+  langBtn.value = STATE.language;
+  audioBtn.value = STATE.audio ?? true;
+  modeSelect.value = STATE.mode;
 }
 
 /* ---------- Control Events ---------- */
@@ -148,6 +156,11 @@ modeSelect.addEventListener('change', (e) => {
   updateFooter();
   restartTest();
   savePreferences();
+});
+
+settingsBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  settingsPanel.classList.toggle("show");
 });
 
 /* ---------- Event Binding ---------- */
