@@ -148,7 +148,7 @@ function onType(e) {
   }
 }
 
-function inputHandling() {
+function spaceHandling() {
   const typed = typingInput.value.trim();
   const target = STATE.wordsList[STATE.currentIndex] || "";
   const curEl = document.querySelector(`.word[data-index="${STATE.currentIndex}"]`);
@@ -174,6 +174,7 @@ function inputHandling() {
     if (STATE.mode !== "timer" && STATE.currentIndex >= STATE.wordsList.length) {
       stopTimer();
       typingInput.blur();
+      typingInput.disabled = true;
     }
   } 
   else {
@@ -230,7 +231,7 @@ function onKeyDown(e) {
   }
   if (e.key === ' ') {
     e.preventDefault(); // cegah masuknya spasi ke input
-    inputHandling();
+    spaceHandling();
     return;
   }
 }
@@ -288,7 +289,9 @@ function stopTimer() {
   if (typingInput && wordsContainer) {
     typingInput.classList.add('input-flash');
     wordsContainer.classList.add('display-flash');
-    playWinningSound(); 
+    playWinningSound();
+    typingInput.disabled = true;
+    typingInput.blur();
   }
 }
 
@@ -331,6 +334,7 @@ function restartTest() {
   typingInput.value = '';
   wpmId.textContent = '0';
   accuracyId.textContent = '100';
+  typingInput.disabled = false;
   typingInput.focus();
 
   updateFooter();
