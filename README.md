@@ -5,7 +5,8 @@ list of all update and version
 # Pre-release
 
 ## 0.1 - 12.09.25
-- Remaking the website from start
+- Remaked the website from start
+- Renamed the website from Script Kiddie to Speedy Typist
 
 ## 0.2 - 13.09.25
 - Added quotes and words mode
@@ -15,7 +16,7 @@ list of all update and version
 ## 0.3 - 19.09.25
 - Added Caret
 - Added languages option (English & Indonesia)
-- Improvise input handling for typo
+- Improvised input handling for typo
 
 ## 0.4 - 27.09.25
 - Bug fixes
@@ -25,7 +26,7 @@ list of all update and version
 
 ## 0.5 - 28.09.25
 - Added saving preferences feature with Local Storage
-- Moving word data to JSON file
+- Moved word data to JSON file
 
 ## 0.6 - 01.10.25
 - Added highlight score and input when user finished typing
@@ -44,3 +45,10 @@ list of all update and version
 ## 0.9 - 19.10.25
 - Added help button for typing tips
 - Added total count selection for words and timer mode
+
+# Full Release
+
+## 1.0 - 22.10.25
+- Renamed the website from Speedy Typist to Speed Writer
+- All settings were moved to settings panel beside restart button
+- Input are disabled when user finished typing
