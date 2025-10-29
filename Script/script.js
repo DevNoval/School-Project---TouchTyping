@@ -177,14 +177,22 @@ function startTimer() {
 }
 
 function stopTimer() {
+  if (!STATE.started && !STATE.timerInterval) return;
   cleanUpTest();
   scoreboard?.forEach(el => el.classList.add("score-flash", "score-highlight"));
+
+  if(typingInput && wordsContainer) {
+    typingInput.classList.add("input-flash");
+    wordsContainer.classList.add("display-flash");
+  }
+
   typingInput.disabled = true; typingInput.blur();
   playWinningSound();
 }
 
 function cleanUpTest() {
-  STATE.started = false; clearInterval(STATE.timerInterval);
+  STATE.started = false; 
+  clearInterval(STATE.timerInterval);
   scoreboard?.forEach(el => el.classList.remove("score-flash", "score-highlight"));
   typingInput.classList.remove("input-wrong", "input-flash");
   wordsContainer.classList.remove("display-flash");
