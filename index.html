@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Speed Writer</title>
+  <title>⌨️ Speed Writer</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="theme-light">
@@ -12,50 +12,58 @@
     <!--Header webpage-->
     <header class="app-header">
       <h1>Speed Writer</h1>
-      
-      <!--Control panel-->
-      <div class="controls">
-        <div id="settingsPanel" class="settings-panel hidden">
-          
-          <!--Language-->
-          <div class="settings-group">
-            <button id="langBtn" class="btn" title="Ganti bahasa">🇮🇩 Bahasa</button>
-          </div>
-
-          <!--Mode selection-->
-          <div class="settings-group">
-            <select id="modeSelect" class="btn" title="Ganti mode">
-              <option value="quote">💬Kutipan</option>
-              <option value="words">⌨️Kata Acak</option>
-              <option value="timer">🕛Timer</option>
-            </select>
-          </div>
-
-          <!--Count selection-->
-          <div class="settings-group">
-            <select id="countSelect" class="btn" title="Atur hitungan">
-              <option value="option1"></option>
-              <option value="option2"></option>
-              <option value="option3"></option>
-            </select>
-          </div>
-
-          <!--Audio-->
-          <div class="settings-group">
-            <button id="audioBtn" class="btn" title="Putar audio">🔇</button>
-          </div>
-
-          <!--Theme-->
-          <div class="settings-group">
-            <button id="themeBtn" class="btn" title="Ganti tema">☀️</button>
-          </div>
-
+    </header>
+    
+    <!--Control panel-->
+    <div class="controls">
+      <div id="settingsPanel" class="settings-panel hidden">
+        
+        <!--Language-->
+        <div class="settings-group">
+          <button id="langBtn" class="btn" title="Ganti bahasa">🇮🇩 Bahasa</button>
         </div>
 
-        <button id="settingsBtn" class="btn" title="Pengaturan">⚙️</button>
-        <button id="restartBtn" class="btn primary">Restart</button>
+        <!--Mode selection-->
+        <div class="settings-group">
+          <select id="modeSelect" class="btn" title="Ganti mode">
+            <option value="quote">💬Kutipan</option>
+            <option value="words">⌨️Kata Acak</option>
+            <option value="timer">🕛Timer</option>
+          </select>
+        </div>
+
+        <!--Count selection-->
+        <div class="settings-group">
+          <select id="countSelect" class="btn" title="Atur hitungan">
+            <option value="option1"></option>
+            <option value="option2"></option>
+            <option value="option3"></option>
+          </select>
+        </div>
+
+        <div class="settings-group">
+          <select id="fontSize" class="btn" title="Ukuran font">
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+
+        <!--Audio-->
+        <div class="settings-group">
+          <button id="audioBtn" class="btn" title="Putar audio">🔇</button>
+        </div>
+
+        <!--Theme-->
+        <div class="settings-group">
+          <button id="themeBtn" class="btn" title="Ganti tema">☀️</button>
+        </div>
+
       </div>
-    </header>
+
+      <button id="settingsBtn" class="btn" title="Pengaturan">⚙️</button>
+      <button id="restartBtn" class="btn primary">Restart</button>
+    </div>
 
     <main class="main">
       <!--Test area-->
@@ -83,7 +91,7 @@
       <div class="modal-content">
         <h2>Posisi Jari (Home Row Key)</h2>
         <p>Letakan jari-jari pada huruf A S D F (Kiri) dan J K L ; (Kanan).</p><br>
-        <img id="homeRowImg" class="homeRowSVG" src="Data/touch-control.png" alt="Panduan posisi jari Home Row Key">
+        <img id="homeRowImg" class="keyboardImg" src="Data/touch-control.png" alt="Panduan posisi jari Home Row Key">
       </div>
     </div>
   </div>
