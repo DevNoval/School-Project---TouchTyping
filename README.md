@@ -52,3 +52,12 @@ list of all update and version
 - Renamed the website from Speedy Typist to Speed Writer
 - All settings were moved to settings panel beside restart button
 - Input are disabled when user finished typing
+- Added more words to JSON file
+
+## 1.1 - 29.10.25
+- Added font size selection for readability
+- Redesign the web layout
+- Adjusting the settings panel
+- Added Icon in tab
+- Rewrited the code to look more organized
+- Added more words to JSON file
