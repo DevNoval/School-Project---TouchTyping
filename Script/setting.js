@@ -14,6 +14,7 @@ function savePreferences() {
     theme: document.body.classList.contains("theme-dark") ? "dark" : "light",
     audio: STATE.audio ? "on" : "off",
     setCount: STATE.setCount,
+    fontSize: STATE.fontSize
   }));
 }
 
@@ -39,6 +40,8 @@ function loadPreferences() {
     langBtn.textContent = STATE.language === "id" ? "🇮🇩 Bahasa" : "🇺🇸 English";
     if (modeSelect) modeSelect.value = STATE.mode;
     if (modeLabel) modeLabel.textContent = MODE[STATE.mode] || STATE.mode;
+
+    if(fontSize) fontSize.value = STATE.font;
     
   } catch (error) {
     console.error("Gagal load preferences:", error);
@@ -101,6 +104,7 @@ function loadSettings() {
   langBtn.value = STATE.language;
   audioBtn.value = STATE.audio ?? true;
   modeSelect.value = STATE.mode;
+  fontSize.value = STATE.font;
 }
 
 /* ---------- Control Events ---------- */
@@ -133,6 +137,12 @@ function toggleCountSelect(e) {
   savePreferences();
 }
 
+function toggleFontSize(size) {
+  document.body.classList.remove("font-small", "font-medium", "font-large");
+  document.body.classList.add(`font-${size}`);
+  savePreferences();
+}
+
 function toggleHelpModal() {
   if (helpModal.classList.contains('hidden')) {
     helpModal.style.display = 'block'
@@ -157,6 +167,13 @@ modeSelect.addEventListener('change', (e) => {
   restartTest();
   savePreferences();
 });
+
+fontSize.addEventListener('change', (e) => {
+  STATE.font = e.target.value;
+
+  toggleFontSize();
+  savePreferences();
+})
 
 settingsBtn.addEventListener("click", (e) => {
   e.stopPropagation();

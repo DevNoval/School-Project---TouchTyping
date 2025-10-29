@@ -1,14 +1,13 @@
 /* ============================ script.js - Typing Test ============================ */
 
 /* ---------- Utility ---------- */
-function pickRandom(arr, n) {
-  const pool = [...arr];
+function pickRandom(array, n) {
+  const pool = [...array];
   const out = [];
   while (out.length < n && pool.length) {
     const i = Math.floor(Math.random() * pool.length);
     out.push(pool.splice(i, 1)[0]);
-  }
-  return out;
+  } return out;
 }
 
 /* ---------- Generate kata/quote ---------- */
@@ -176,8 +175,7 @@ function spaceHandling() {
       typingInput.blur();
       typingInput.disabled = true;
     }
-  } 
-  else {
+  } else {
     playErrorSound();
     curEl?.classList.add("wrong");
     typingInput.value += " ";
@@ -201,8 +199,7 @@ function updateInputStyle(typed) {
   }
   if (isWrong) {
     typingInput.classList.add('input-wrong');
-  } 
-  else {
+  } else {
     typingInput.classList.remove('input-wrong');
   }
 }
@@ -266,8 +263,7 @@ function startTimer() {
         stopTimer();
         typingInput.blur();
       }
-    } 
-    else {
+    } else {
       timeId.textContent = STATE.elapsed;
     }
     updateWPM();
@@ -326,8 +322,7 @@ function restartTest() {
   if (STATE.mode === 'timer') {
     renderTimerWords();
     timeId.textContent = STATE.activeTimerSeconds;
-  } 
-  else {
+  } else {
     renderWords();
     timeId.textContent = '0';
   }
@@ -336,18 +331,16 @@ function restartTest() {
   accuracyId.textContent = '100';
   typingInput.disabled = false;
   typingInput.focus();
-
   updateFooter();
   updateCaret();
 }
 
 /* ---------- Helpers ---------- */
 function updateFooter() {
-  const wordsLeftElement = wordsLeftId.closest('small'); // Asumsi 'Kata tersisa' berada di dalam elemen <small>
+  const wordsLeftElement = wordsLeftId.closest('small');
   if(STATE.mode === 'timer') {
     wordsLeftElement.classList.add('hidden-element');
-  } 
-  else{
+  } else{
     wordsLeftId.textContent = Math.max(0, STATE.wordsList.length - STATE.currentIndex);
     wordsLeftElement.classList.remove('hidden-element');
   }
@@ -364,8 +357,7 @@ async function loadWordData() {
     const response = await fetch('Data/data.json');
     if (!response.ok) throw new Error('Gagal fetch data.json: ' + response.status);
     WORD_DATA = await response.json();
-  } 
-  catch (error) {
+  } catch (error) {
     console.error('Error memuat data.json:', error);
   }
 }
@@ -382,15 +374,13 @@ window.addEventListener('DOMContentLoaded', async () => {
   if (STATE.mode === 'timer') {
     renderTimerWords();
     timeId.textContent = STATE.activeTimerSeconds;
-  } 
-  else {
+  } else {
     renderWords();
     timeId.textContent = '0';
   }
   typingInput.focus();
   modeLabel.textContent = STATE.mode === 'timer' ? 'Timer' : STATE.mode === 'words'? 'Kutipan' : 'Kata Acak';
   langBtn.textContent = STATE.language === 'id' ? '🇮🇩 Bahasa' : '🇺🇸 English';
-
   updateCountSelectOptions();
   updateFooter();
 });
