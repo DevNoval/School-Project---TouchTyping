@@ -1,83 +1,85 @@
-/* styles.css */
+/* ======================== styles.css (ringkas & rapi) ======================== */
 
-/*Theme colors*/
-:root{
-  --bg:#ffffff; 
-  --text:#111827; 
-  --card:#f3f4f6; 
-  --accent:#ffd800; 
-  --success:#16a34a; 
-  --danger:#ef4444;
+/* ---------- Tema ---------- */
+:root {
+  --bg: #fff;
+  --text: #111827;
+  --card: #f3f4f6;
+  --accent: #ffd800;
+  --success: #16a34a;
+  --danger: #ef4444;
   --hover: #e9e9e9;
 }
 
-body{
-  font-family:Inter, system-ui, Arial; 
-  margin:0; 
-  background:var(--bg); 
-  color:var(--text); 
-  transition:background 300ms ease, color 300ms ease
+body {
+  font-family: Inter, system-ui, Arial;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s, color 0.3s;
 }
 
-body.theme-dark{
-  --bg:#0b1220; 
-  --text:#e6eef8; 
-  --card:#0f1724; 
-  --accent:#ffd800; 
-  --success:#34d399; 
-  --danger:#fb7185;
+body.theme-dark {
+  --bg: #0b1220;
+  --text: #e6eef8;
+  --card: #0f1724;
+  --accent: #ffd800;
+  --success: #34d399;
+  --danger: #fb7185;
   --hover: #1b2330;
 }
 
-.app{
-  max-width:980px;
-  margin:32px auto;
-  padding:20px
+/* ---------- Ukuran Font ---------- */
+.font-small { --word-font-size: 1em; --input-font-size: 0.9em; }
+.font-medium { --word-font-size: 1.2em; --input-font-size: 1em; }
+.font-large { --word-font-size: 1.5em; --input-font-size: 1.2em; }
+
+/* ---------- Tata Letak Utama ---------- */
+.app {
+  max-width: 1080px;
+  margin: 32px auto;
+  padding: 20px;
+  font-size: 1.2em;
 }
 
-/* Buttons */
-.btn{
+.app-header {
+  display: flex;
+  align-items: center;
+  font-size: 1.2em;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  width: fit-content;
+  margin-left: auto;
+}
+
+/* ---------- Tombol ---------- */
+.btn {
   font-size: 0.8em;
-  background:var(--card);
-  color:var(--text);
-  border:0;
-  padding:8px 12px;
-  border-radius:8px;
-  cursor:pointer;
-  transition:transform 150ms
+  background: var(--card);
+  color: var(--text);
+  border: 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.25s;
 }
 
-.btn:hover {
-  background:var(--hover);
-}
+.btn:hover { background: var(--hover); }
+.btn:active { transform: scale(0.98); }
+.primary, .primary:hover { background: var(--accent); color: #111; }
 
-.btn:active{transform:scale(.98)}
-
-.primary, .primary:hover{
-  background:var(--accent);
-  color:#111
-}
-
-/* ---------- Header ---------- */
-.app-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center
-}
-
-.controls{
-  display:flex;
-  gap:8px;
-}
-
-/* Settings */
+/* ---------- Panel Pengaturan ---------- */
 .settings-panel {
-  position:static ;
+  position: relative;
+  justify-content: center;
   width: 100%;
   transform: translateX(20%);
   opacity: 0;
   pointer-events: none;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  transition: transform 0.4s, opacity 0.4s;
   z-index: 100;
 }
 
@@ -87,117 +89,115 @@ body.theme-dark{
   pointer-events: all;
 }
 
-.settings-group {
-  display:contents;
-}
+.settings-group { display: contents; }
 
-/* ---------- Main ---------- */
-.main{
-  display:flex;
-  gap:20px;
-  margin-top:20px
-}
+/* ---------- Area Tes ---------- */
+.main { display: flex; gap: 20px; margin-top: 20px; }
+.test-area { flex: 1; }
 
-/* Test & input*/
-.test-area{flex:1}
-
-.words-container{
-  min-height:140px;
+.words-container {
+  min-height: 140px;
   border: 2px solid var(--card);
-  border-radius:8px;
-  padding:14px;
-  background:var(--card);
-  overflow:hidden;
-  position:relative
-}
-
-.words-container .word{
-  font-size: 1.2em;
-  padding:4px 6px;
-  margin-right:6px;
-  border-radius:6px;
-  display:inline-block
-}
-
-.words-container .word.current{
-  background:var(--accent);
-  color:#111;
-  position:relative;
-}
-
-.words-container .word.correct{color:var(--success)}
-
-.words-container .word.wrong{color:var(--danger)}
-
-.words-container.display-flash {
-  animation: displayFlash 1s ease-out 1;
-}
-
-/* Caret */
-.caret{
-  margin-top:4px;
-  display:inline-block;
-  width:0;
-  height:1.2em;
-  border-left: 2px solid var(--text);
-  animation:blink 1s steps(1) infinite;
-  position:absolute;
-}
-
-.typing-input{
-  font-size: 1em;
-  width:100%;
-  margin-top:12px;
-  padding:10px;
-  border-radius:8px;
-  border:1px solid #cbd5e1;
-  background:transparent;
-  color:var(--text)
-}
-
-.typing-input.input-wrong{
-  border-color: var(--danger);
-  box-shadow: 0 0 0 4px rgba(239,68,68,0.06);
-  background: rgba(239, 68, 68, 0.5);
-  transition: box-shadow 120ms, border-color 120ms;
-}
-
-.typing-input.input-flash {
-  animation: inputFlash 1s ease-out 1;
-}
-
-/*Scoreboard*/
-.scoreboard{
-  width:220px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
   border-radius: 8px;
-}
-
-.score-item{
-  background:var(--card);
-  border: solid 2px var(--card);
-  padding:8px;
-  border-radius:8px;
-}
-
-.score-item.score-flash {
-    animation: scoreFlash 1s ease-out 1;
-}
-
-.score-highlight {
-  border:solid 2px var(--accent);
-}
-
-/* ---------- Footer ---------- */
-.footer{
-  text-align:center;
-  margin-top:18px;
+  padding: 14px;
+  background: var(--card);
+  overflow: hidden;
   position: relative;
 }
 
-/* Helper modal */
+.word {
+  padding: 4px 6px;
+  margin-right: 6px;
+  border-radius: 6px;
+  display: inline-block;
+  font-size: var(--word-font-size);
+}
+
+.word.current { background: var(--accent); color: #111; }
+.word.correct { color: var(--success); }
+.word.wrong { color: var(--danger); }
+.words-container.display-flash { animation: displayFlash 1s ease-out 1; }
+
+/* ---------- Caret & Input ---------- */
+.caret {
+  margin-top: 4px;
+  width: 0;
+  height: 1.2em;
+  border-left: 2px solid var(--text);
+  animation: blink 1s steps(1) infinite;
+  position: absolute;
+}
+
+.typing-input {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font-size: var(--input-font-size);
+  transition: box-shadow 0.12s, border-color 0.12s;
+}
+
+.typing-input.input-wrong {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.06);
+  background: rgba(239, 68, 68, 0.5);
+}
+
+.typing-input.input-flash { animation: inputFlash 1s ease-out 1; }
+
+/* ---------- Skor ---------- */
+.scoreboard {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 8px;
+}
+
+.score-item {
+  background: var(--card);
+  border: 2px solid var(--card);
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.score-item.score-flash { animation: scoreFlash 1s ease-out 1; }
+.score-highlight { border: 2px solid var(--accent); }
+
+/* ---------- Footer ---------- */
+.footer { text-align: center; margin-top: 18px; position: relative; }
+.hidden-element { display: none !important; }
+
+/* ---------- Tombol Bantuan ---------- */
+.help-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--text);
+  font-weight: bold;
+  font-size: 1.2em;
+  display: flex; justify-content: center; align-items: center;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  transition: background 0.2s;
+}
+
+.help-btn:hover { background: var(--accent); color: var(--bg); }
+
+.keyboardImg {
+  max-width: 75%;
+  height: auto;
+  display: block;
+  margin: 15px auto;
+}
+
+/* ---------- Modal Bantuan ---------- */
 .modal-content {
   transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
@@ -207,72 +207,34 @@ body.theme-dark{
   transform: translateY(50px);
 }
 
-.modal:not(hidden) .modal-content {
+.modal:not(.hidden) .modal-content {
   opacity: 1;
   transform: translateY(0);
 }
 
-.hidden-element {
-  display: none !important;
-}
-
-.help-btn {
-  position: absolute;
-  bottom: 10px; /* Sesuaikan posisi */
-  right: 10px; /* Sesuaikan posisi */
-  width: 30px; /* Ukuran tombol */
-  height: 30px;
-  border-radius: 50%; /* Bentuk bulat */
-  background-color: var(--card); /* Sesuaikan dengan tema Anda */
-  color: var(--text);
-  font-weight: bold;
-  font-size: 1.2em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  border: 1px solid var(--border);
-  transition: background 0.2s;
-}
-
-.help-btn:hover {
-    background-color: var(--accent);
-    color: var(--bg);
-}
-
-.homeRowSVG {
-  max-width:70%; 
-  height:auto; 
-  display:block; 
-  margin: 15px auto;
-}
-
-/* ---------- Keyframes animation ---------- */
+/* ---------- Animasi ---------- */
 @keyframes scoreFlash {
-    0% {background: var(--accent);}
-    50% {background: var(--accent);}
-    100% {background: transparent;}
+  0%, 50% { background: var(--accent); }
+  100% { background: transparent; }
 }
 
 @keyframes inputFlash {
-  0% {background: rgb(255, 216, 0, 0.25); border-color: var(--success)}
-  50% {background: rgb(255, 216, 0, 0.25); border-color: var(--success);}
-  100% {background: transparent;}
+  0%, 50% { background: rgba(255, 216, 0, 0.25); border-color: var(--success); }
+  100% { background: transparent; }
 }
 
 @keyframes displayFlash {
-  0% {border-color: var(--success)}
-  50% {border-color: var(--success)}
-  100% {border-color: var(--card)}
+  0%, 50% { border-color: var(--success); }
+  100% { border-color: var(--card); }
 }
 
-@keyframes blink{50%{opacity:0}}
+@keyframes blink { 50% { opacity: 0; } }
 
-*{box-sizing:border-box}
-
-*{transition:background 250ms ease,color 250ms ease}
-
-/* ---------- Smaller screen ---------- */
-@media(max-width:720px){
-  .main{flex-direction:column}.scoreboard{width:100%}
+/* ---------- Responsif ---------- */
+@media (max-width: 1080px) {
+  .main { flex-direction: column; }
+  .scoreboard { width: 100%; }
 }
+
+/* ---------- Reset umum ---------- */
+* { box-sizing: border-box; transition: background 0.25s, color 0.25s; }
